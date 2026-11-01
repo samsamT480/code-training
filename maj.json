@@ -1,5 +1,7 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "annonce": "",
-  "minutes": 5
+  "minutes": 5,
+  "msg": "",
+  "msgId": 0
 }

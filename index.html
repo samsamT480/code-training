@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Code Training – Entraînement au code de la route</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1f6feb"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--tx:#1c2230;--mu:#5d6678;--bd:#dfe3ec;--ac:#1f6feb;--ok:#1a8a4a;--okb:#e3f6ea;--ko:#c62828;--kob:#fde8e8;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b2030;--tx:#e8ebf3;--mu:#98a2b8;--bd:#2c344a;--ac:#5b9dff;--ok:#4cc27f;--okb:#12301f;--ko:#ff7b72;--kob:#3a1a1a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1b2030;--tx:#e8ebf3;--mu:#98a2b8;--bd:#2c344a;--ac:#5b9dff;--ok:#4cc27f;--okb:#12301f;--ko:#ff7b72;--kob:#3a1a1a;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:8px 0}h2{font-size:19px;margin:14px 0 6px}
+.mu{color:var(--mu)}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:14px 0}
+.tile{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border:1.5px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);font:inherit;cursor:pointer;width:100%}
+.tile:hover{border-color:var(--ac)}.tile span{color:var(--mu);font-size:14px}
+.ex{border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--mu)}
+.bar{height:8px;background:var(--bd);border-radius:9px;overflow:hidden;margin-bottom:12px}.bar i{display:block;height:100%;background:var(--ac)}
+.vis{position:relative;text-align:center;background:var(--bg);border-radius:10px;padding:8px;margin-bottom:10px}
+.vis svg{height:150px;width:auto;max-width:100%}
+.vis em{position:absolute;top:6px;right:8px;font-size:11px;font-style:normal;background:var(--ac);color:#fff;padding:2px 8px;border-radius:99px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1.5px solid var(--bd);border-radius:10px;margin:8px 0;cursor:pointer}
+.opt input{width:22px;height:22px;accent-color:var(--ac);flex:none}
+.opt .m{margin-left:auto;font-size:18px}
+.opt.good{border-color:var(--ok);background:var(--okb)}.opt.good .m{color:var(--ok)}
+.opt.bad{border-color:var(--ko);background:var(--kob)}.opt.bad .m{color:var(--ko)}
+button{font:inherit}
+.pri{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:12px 18px;margin-top:10px;width:100%;cursor:pointer;font-weight:600}
+.ghost{background:none;border:1px solid var(--bd);color:var(--tx);border-radius:10px;padding:8px 12px;cursor:pointer}
+.fb{padding:12px;border-radius:10px;margin-top:10px}.fb.g{background:var(--okb)}.fb.b{background:var(--kob)}
+.err{color:var(--ko)}
+#upd{display:none;position:sticky;top:0;z-index:9;background:#f7c600;color:#111;padding:10px 14px;text-align:center;font-weight:600}
+#upd button{margin-left:8px;padding:4px 12px;border-radius:8px;border:0;background:#111;color:#fff;font-weight:700;cursor:pointer}
+.lg{font-size:12px;color:var(--mu);margin-top:4px}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1.5px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit}
+.sqs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.sqs button{width:46px;height:46px;border-radius:10px;border:0;color:#fff;font-weight:700;font-size:16px;cursor:pointer}
+.sqs .g{background:#1a8a4a}.sqs .r{background:#c62828;text-decoration:line-through}
+.tag{display:inline-block;font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--bg);border:1px solid var(--bd);margin:6px 0}
+.score{font-size:40px;font-weight:700;margin:4px 0}.score small{font-size:18px;color:var(--mu)}
+.rev{border-top:1px solid var(--bd);padding:10px 0}.rev ul{margin:6px 0;padding-left:20px;color:var(--ok)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.row button{margin:0}
+small.n{display:block;margin-top:14px;font-size:13px}
+</style></head><body><div id="app"></div><form name="echanges" method="POST" data-netlify="true" hidden><input name="form-name" value="echanges"><input name="prenom"><input name="type"><textarea name="message"></textarea></form>
+<script>
+const $=s=>document.querySelector(s);
+const sg=(v,i)=>`<svg viewBox="${v}" aria-hidden="true">${i}</svg>`;
+const sq=i=>sg('0 0 120 120',i), sc=i=>sg('0 0 240 120',i);
+const car=(x,y,c)=>`<g transform="translate(${x} ${y})"><rect x="8" width="30" height="12" rx="4" fill="${c}"/><rect y="9" width="46" height="16" rx="5" fill="${c}"/><circle cx="12" cy="26" r="5" fill="#222"/><circle cx="35" cy="26" r="5" fill="#222"/></g>`;
+const tc=(x,y,c,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${c}"/>`;
+const mv=(dx,dy,d)=>`<animateTransform attributeName="transform" type="translate" values="0 0;${dx} ${dy}" dur="${d}s" repeatCount="indefinite"/>`;
+const ic=e=>sq(`<text x="60" y="84" font-size="66" text-anchor="middle">${e}</text>`);
+const T=(x,y,t,c='#fff',s=14)=>`<text x="${x}" y="${y}" font-size="${s}" font-weight="700" fill="${c}" text-anchor="middle" font-family="Arial">${t}</text>`;
+let drops='';for(let i=0;i<14;i++)drops+=`<line x1="${15+i*16}" y1="${5+i%3*10}" x2="${12+i*16}" y2="${16+i%3*10}" stroke="#4a90e2" stroke-width="2"><animateTransform attributeName="transform" type="translate" values="0 0;-5 75" dur="${.8+i%4*.15}s" repeatCount="indefinite"/></line>`;
+let zebra='';for(let i=0;i<5;i++)zebra+=`<rect x="${104+i*9}" y="40" width="5" height="44" fill="#fff"/>`;
+const V={
+stop:sq(`<polygon points="40,6 80,6 114,40 114,80 80,114 40,114 6,80 6,40" fill="#d3202a" stroke="#fff" stroke-width="5"/>${T(60,70,'STOP','#fff',28)}`),
+yield:sq(`<polygon points="60,112 4,16 116,16" fill="#d3202a"/><polygon points="60,88 26,30 94,30" fill="#fff"/>`),
+noentry:sq(`<circle cx="60" cy="60" r="54" fill="#d3202a"/><rect x="24" y="50" width="72" height="20" fill="#fff"/>`),
+speed:sq(`<circle cx="60" cy="60" r="54" fill="#d3202a"/><circle cx="60" cy="60" r="40" fill="#fff"/>${T(60,73,'50','#111',38)}`),
+prio:sq(`<polygon points="60,4 116,60 60,116 4,60" fill="#fff" stroke="#111" stroke-width="3"/><polygon points="60,18 102,60 60,102 18,60" fill="#f7c600"/>`),
+rond:sq(`<polygon points="60,6 114,102 6,102" fill="#d3202a"/><polygon points="60,26 96,92 24,92" fill="#fff"/><circle cx="60" cy="72" r="13" fill="none" stroke="#111" stroke-width="5" stroke-dasharray="14 6"/>`),
+nopass:sq(`<circle cx="60" cy="60" r="54" fill="#d3202a"/><circle cx="60" cy="60" r="42" fill="#fff"/><rect x="26" y="52" width="30" height="16" rx="4" fill="#d3202a"/><rect x="64" y="52" width="30" height="16" rx="4" fill="#111"/>`),
+nopark:sq(`<circle cx="60" cy="60" r="54" fill="#1b4fa8"/><circle cx="60" cy="60" r="46" fill="none" stroke="#d3202a" stroke-width="9"/><line x1="25" y1="95" x2="95" y2="25" stroke="#d3202a" stroke-width="9"/>`),
+rain:sc(`<rect width="240" height="120" fill="#b9c6d6"/><rect y="88" width="240" height="32" fill="#555"/>${car(95,74,'#1e88e5')}${drops}`),
+follow:sc(`<rect width="240" height="120" fill="#cfe8ff"/><rect y="70" width="240" height="40" fill="#555"/><g>${car(10,58,'#1e88e5')}${car(130,58,'#e53935')}<line x1="58" y1="50" x2="130" y2="50" stroke="#111" stroke-dasharray="4"/>${T(94,42,'≥ 2 s','#111')}${mv(55,0,3)}</g>`),
+cross:sc(`<rect width="240" height="120" fill="#8bc34a"/><rect x="100" width="40" height="120" fill="#555"/><rect y="40" width="240" height="40" fill="#555"/><g>${tc(110,88,'#1e88e5',20,28)}${mv(0,-20,2.5)}</g>${T(160,110,'vous','#fff')}<g>${tc(190,50,'#e53935',34,20)}${mv(-50,0,2.5)}</g>`),
+ped:sc(`<rect width="240" height="120" fill="#8bc34a"/><rect y="40" width="240" height="44" fill="#555"/>${zebra}<g>${tc(15,52,'#1e88e5',40,20)}${mv(55,0,3)}</g><g><circle cx="123" cy="20" r="7" fill="#e53935"/>${mv(0,85,3)}</g>`),
+blind:sc(`<rect width="240" height="120" fill="#555"/><line x1="0" y1="60" x2="240" y2="60" stroke="#fff" stroke-dasharray="12 10"/>${tc(110,12,'#1e88e5',40,20)}<polygon points="108,34 108,60 40,76 40,44" fill="#ffc107"><animate attributeName="opacity" values=".15;.8;.15" dur="1.6s" repeatCount="indefinite"/></polygon>${tc(52,74,'#e53935',36,20)}${T(135,50,'vous','#fff',12)}`),
+light:sc(`<rect width="240" height="120" fill="#cfe8ff"/><rect x="100" y="8" width="40" height="104" rx="10" fill="#222"/><circle cx="120" cy="30" r="12" fill="#4a1a1a"/><circle cx="120" cy="60" r="12" fill="#ffa000"><animate attributeName="opacity" values="1;.7;1" dur="1.2s" repeatCount="indefinite"/></circle><circle cx="120" cy="90" r="12" fill="#123d22"/>`),
+alc:ic('🍷'),belt:ic('💺'),tel:ic('📱'),acc:ic('⚠️'),urg:ic('🆘'),fat:ic('😴'),pil:ic('💊'),tire:ic('🛞'),oil:ic('🛢️'),eco:ic('🌿'),agg:ic('🏘️'),rte:ic('🌳'),park:ic('🅿️'),amb:ic('🚑'),dist:ic('⏱️'),doc:ic('🪪'),auto:ic('🛣️'),drug:ic('🚫'),tri:ic('🔺'),ct:ic('🔧'),fog:ic('🌫️'),
+danger:sq(`<polygon points="60,6 114,102 6,102" fill="#d3202a"/><polygon points="60,26 96,92 24,92" fill="#fff"/>${T(60,82,'!','#111',44)}`),
+oblig:sq(`<circle cx="60" cy="60" r="54" fill="#1b4fa8"/><polygon points="28,52 68,52 68,36 96,60 68,84 68,68 28,68" fill="#fff"/>`),
+dep:sc(`<rect width="240" height="120" fill="#cfe8ff"/><rect y="40" width="240" height="70" fill="#555"/><line x1="0" y1="75" x2="240" y2="75" stroke="#fff" stroke-dasharray="12 10"/><g>${car(100,82,'#e53935')}${mv(30,0,4)}</g><g>${car(10,82,'#1e88e5')}<animateTransform attributeName="transform" type="translate" values="0 0;60 -34;170 -34;190 0" dur="4s" repeatCount="indefinite"/></g>`)};
+const ANIM=['rain','follow','cross','ped','blind','light','dep'];
+const SER=['Panneaux','Règles et priorités','Secours et sécurité','Véhicule et éco-conduite'], IC=['🛑','🚦','🆘','🔧'];
+const Q=[
+[0,'stop','Vous arrivez devant ce panneau. Que devez-vous faire ?',['+Marquer un arrêt complet à la limite de la chaussée','-Ralentir seulement si un véhicule arrive','+Céder le passage aux véhicules des autres routes','-Passer si je suis arrivé le premier'],'Le STOP impose l’arrêt absolu, même si la route paraît libre, puis de céder le passage.'],
+[0,'yield','Ce panneau (cédez le passage) vous oblige à…',['+Laisser passer les véhicules de la route prioritaire','-M’arrêter systématiquement','+Ralentir et, si nécessaire, m’arrêter','-Accélérer pour passer avant les autres'],'Contrairement au STOP, l’arrêt n’est obligatoire que si la circulation l’exige.'],
+[0,'noentry','Ce panneau signale…',['+Une interdiction de circuler dans ce sens','-Une route à sens unique','-Une interdiction de stationner','-Une impasse'],'Sens interdit : l’accès est interdit à tous les véhicules dans ce sens.'],
+[0,'speed','Que signifie ce panneau ?',['+Vitesse maximale autorisée : 50 km/h','-Vitesse minimale obligatoire : 50 km/h','-Il ne concerne que les poids lourds','+Il reste valable jusqu’à un panneau de fin ou la prochaine intersection'],'La limitation concerne tous les véhicules ; elle cesse au panneau de fin de limitation ou à la prochaine intersection (sauf rappel).'],
+[0,'prio','Ce panneau indique…',['+Que vous circulez sur une route prioritaire','-Que vous devez céder le passage','-Que vous devez vous arrêter','+Que vous gardez la priorité aux intersections jusqu’au panneau de fin'],'Il est barré d’un trait pour annoncer la fin de la route prioritaire.'],
+[0,'rond','Ce panneau annonce…',['+Un carrefour à sens giratoire','-Une obligation de tourner à droite','+Qu’il faut adapter sa vitesse en approche','-Une zone où l’arrêt est obligatoire'],'Panneau de danger : on cède généralement aux véhicules déjà engagés dans l’anneau.'],
+[0,'nopass','Avec ce panneau, qu’est-ce qui est interdit ?',['+Dépasser une voiture','+Dépasser un camion','-Dépasser un cycliste','-Rouler à plus de 110 km/h'],'Il interdit de dépasser tout véhicule à moteur autre qu’un deux-roues sans side-car.'],
+[0,'nopark','Que signifie ce panneau ?',['+Stationnement interdit','-Arrêt et stationnement interdits','+Il s’applique du côté où il est installé','-Il s’applique des deux côtés de la route'],'Un seul trait : stationnement interdit (l’arrêt reste possible). Deux traits croisés : arrêt interdit.'],
+[1,'rain','Sur autoroute, par temps de pluie, la vitesse maximale est de…',['-130 km/h','+110 km/h','-100 km/h','-90 km/h'],'110 km/h sur chaussée mouillée, au lieu de 130 km/h (100 km/h en permis probatoire).'],
+[1,'follow','Quelle distance de sécurité devez-vous respecter ?',['+Au moins l’équivalent de 2 secondes de trajet','-Une seule seconde suffit si je roule lentement','+Davantage si la route est mouillée','-Moins en ville'],'Règle des 2 secondes, à doubler sur chaussée mouillée.'],
+[1,'cross','Intersection sans panneau : un véhicule arrive par votre droite.',['+Je dois lui céder le passage','-Il doit me céder le passage','+Je ralentis et je regarde avant de m’engager','-Le premier arrivé passe toujours'],'Sans signalisation, c’est la priorité à droite.'],
+[1,'light','Feu orange fixe : que faites-vous ?',['+Je m’arrête si je peux le faire en sécurité','-J’accélère pour passer avant le rouge','+Je passe si je ne peux plus m’arrêter dans de bonnes conditions','-Je passe toujours, le feu est presque vert'],'Le feu orange fixe annonce le rouge : on s’arrête sauf si un freinage brutal serait dangereux.'],
+[1,'alc','Quel est le taux d’alcool maximal autorisé (hors permis probatoire) ?',['+0,5 g/l de sang','+0,25 mg/l d’air expiré','-0,8 g/l de sang','-1 g/l de sang'],'0,5 g/l de sang soit 0,25 mg/l d’air expiré ; 0,2 g/l en permis probatoire.'],
+[1,'belt','Qui doit attacher sa ceinture de sécurité ?',['+Le conducteur','+Les passagers avant','+Les passagers arrière','-Personne sur les trajets courts'],'Tous les occupants, à l’avant comme à l’arrière, dès que la place est équipée.'],
+[1,'tel','Au volant, que dit la loi ?',['+Tenir un téléphone en main est interdit','-Les écouteurs sont autorisés','+Un kit mains libres intégré au véhicule est toléré','-C’est autorisé à l’arrêt au feu rouge'],'Téléphone en main, écouteurs, oreillettes et casques sont interdits en conduisant.'],
+[1,'ped','Un piéton s’engage sur un passage protégé.',['+Je cède le passage au piéton engagé ou sur le point de l’être','-Je klaxonne pour qu’il se dépêche','+Je ne dépasse pas un véhicule arrêté devant le passage','-Je passe avant lui s’il traverse lentement'],'Le piéton est prioritaire sur un passage protégé ; ne doublez pas un véhicule qui s’y arrête.'],
+[2,'acc','Vous arrivez sur un accident. Quels sont les premiers gestes ?',['+Protéger (baliser, couper le contact)','+Alerter les secours','-Déplacer systématiquement les blessés','+Secourir sans se mettre en danger'],'Protéger, Alerter, Secourir. On ne déplace un blessé qu’en cas de danger vital (incendie par exemple).'],
+[2,'urg','Quels numéros permettent d’alerter les secours ?',['+15 (SAMU)','+18 (pompiers)','+112 (numéro européen)','-3615'],'Ces numéros d’urgence sont gratuits, y compris depuis un portable.'],
+[2,'fat','Sur un long trajet…',['+Je fais une pause environ toutes les 2 heures','-J’ouvre la fenêtre et je continue si je somnole','+Je m’arrête dès les premiers signes de somnolence','-Un café remplace le repos'],'Seul le repos combat la fatigue : une courte sieste de 15 à 20 minutes aide.'],
+[2,'pil','Un médicament porte un pictogramme rouge (niveau 3).',['+La conduite est interdite sans avis d’un médecin','-Je conduis avec prudence','+J’en parle à un médecin ou à un pharmacien','-Je conduis seulement de jour'],'Niveau 3 : ne pas conduire sans l’accord d’un médecin.'],
+[2,'blind','Avant de changer de file, je dois…',['+Regarder dans le rétroviseur','+Mettre mon clignotant','+Contrôler l’angle mort en tournant la tête','-Klaxonner pour prévenir'],'Rétroviseur, clignotant, contrôle de l’angle mort, puis manœuvre.'],
+[3,'tire','À propos des pneus :',['+La profondeur minimale des sculptures est de 1,6 mm','+La pression se contrôle à froid','+Une pression trop basse augmente la consommation','-On peut monter un pneu très usé et un neuf sur le même essieu'],'Un pneu sous-gonflé s’use plus vite, consomme plus et tient moins bien la route.'],
+[3,'oil','Le voyant rouge de pression d’huile s’allume.',['+Je m’arrête dès que possible, en sécurité','-Je continue jusqu’à destination','+Je coupe le moteur et je fais vérifier','-J’accélère pour refroidir'],'Un voyant rouge signale un danger : risque de casse du moteur.'],
+[3,'eco','Une conduite économique consiste à…',['+Anticiper les ralentissements','+Garder une vitesse stable','-Accélérer fort puis freiner fort','-Rouler au point mort en descente'],'Anticiper et lisser la conduite réduit consommation et émissions ; le point mort fait perdre le frein moteur.'],
+[0,'danger','Un panneau triangulaire à bord rouge, comme celui-ci, signale…',['+Un danger','+Qu’il faut redoubler de vigilance','-Une obligation','-Une interdiction'],'Les panneaux triangulaires sont des panneaux de danger (ici : autres dangers).'],
+[0,'oblig','Ce panneau à fond bleu signifie…',['+Obligation de tourner à droite au prochain carrefour','-Interdiction de tourner à droite','-Simple conseil de tourner à droite','-Je peux continuer tout droit'],'Les panneaux ronds à fond bleu indiquent une obligation.'],
+[1,'agg','En agglomération, sans indication contraire, la vitesse maximale est de…',['-30 km/h','+50 km/h','-70 km/h','-60 km/h'],'50 km/h en agglomération, sauf limitation différente signalée (zone 30, par exemple).'],
+[1,'rte','Hors agglomération, sur une route à double sens sans séparateur central, la vitesse maximale par défaut est de…',['-70 km/h','+80 km/h','-90 km/h','-110 km/h'],'80 km/h, sauf si une limitation différente est signalée (90 km/h sur certaines routes).'],
+[1,'dep','Pour dépasser un véhicule…',['+Je m’assure que la voie est libre sur une distance suffisante','+Je mets mon clignotant à gauche','-Je dépasse par la droite sur une route à double sens','-Je peux dépasser dans un virage sans visibilité'],'On dépasse en principe par la gauche, après avoir vérifié sa sécurité, et jamais sans visibilité suffisante.'],
+[1,'park','Il est interdit de stationner…',['+Sur un passage pour piétons','+Devant une entrée carrossable','-Sur une place de parking ordinaire','-Le long d’un trottoir dans une zone sans interdiction'],'Le stationnement sur un passage piéton ou devant un accès est gênant ou dangereux, et sanctionné.'],
+[1,'rond','Dans un giratoire signalé par un panneau « cédez le passage » :',['+Les véhicules déjà engagés dans le giratoire sont prioritaires','-Les véhicules qui entrent sont prioritaires','+Je mets mon clignotant à droite avant de sortir','-Je mets mon clignotant à gauche à l’entrée'],'On cède aux véhicules circulant dans l’anneau et on signale sa sortie à droite.'],
+[1,'amb','Une ambulance avec gyrophare et sirène arrive derrière vous.',['+Je dois lui laisser le passage','+Je me range dès que possible en sécurité','-Je l’ignore si je suis sur une route prioritaire','-J’accélère pour dégager la route'],'Les véhicules prioritaires (gyrophare et avertisseur sonore) doivent pouvoir passer : on facilite leur passage sans se mettre en danger.'],
+[1,'dist','À propos de la distance d’arrêt :',['+Elle augmente avec la vitesse','+Elle est plus longue sur chaussée mouillée','-Elle est la même sur route sèche ou mouillée','-Elle diminue quand je suis fatigué'],'Distance d’arrêt = distance de réaction + distance de freinage. Fatigue et alcool allongent le temps de réaction.'],
+[1,'doc','Quels documents devez-vous pouvoir présenter lors d’un contrôle ?',['+Le permis de conduire','+La carte grise','+L’attestation d’assurance','-Le carnet d’entretien'],'Permis, certificat d’immatriculation et assurance (éventuellement sur support numérique).'],
+[1,'auto','Sur autoroute, il est interdit de…',['+Faire demi-tour','+Rouler en marche arrière','+S’arrêter sans raison sur la bande d’arrêt d’urgence','-Dépasser par la gauche'],'Demi-tour et marche arrière sont interdits ; la bande d’arrêt d’urgence est réservée aux pannes et urgences.'],
+[1,'drug','Au sujet des stupéfiants au volant :',['+Conduire après en avoir pris est un délit','+Aucun taux n’est toléré','-Un faible taux est toléré','-C’est autorisé si je me sens bien'],'Tolérance zéro : un test salivaire peut être pratiqué lors d’un contrôle.'],
+[2,'tri','Pour signaler un véhicule en panne sur la route :',['+J’enfile mon gilet de haute visibilité','+Je pose le triangle à au moins 30 mètres du véhicule','-Je me place sur la chaussée pour faire des signes','-Je pose le triangle juste derrière le coffre'],'Gilet, puis triangle à au moins 30 m, en sécurité. Sur autoroute, mettez-vous à l’abri derrière la glissière.'],
+[3,'ct','Le contrôle technique d’une voiture particulière…',['+Est obligatoire pour la première fois dans les 4 ans suivant la mise en circulation','+Se renouvelle ensuite tous les 2 ans','-Est facultatif','-Est annuel dès la première année'],'Premier contrôle avant les 4 ans du véhicule, puis tous les 2 ans.'],
+[3,'rain','En cas d’aquaplanage (perte d’adhérence sur l’eau) :',['+Je lève le pied de l’accélérateur','+Je tiens fermement le volant sans braquer brusquement','-Je freine à fond','-J’accélère pour retrouver l’adhérence'],'On relâche l’accélérateur, on garde le cap sans à-coups et on ne freine pas brutalement.'],
+[3,'fog','Par brouillard dense (visibilité inférieure à 50 m) :',['+J’allume mes feux de brouillard','+Je garde mes feux de croisement','-J’utilise mes feux de route','-J’allume mes feux de détresse en roulant'],'Feux de croisement et antibrouillard ; les feux de route éblouissent dans le brouillard.']
+].map(([s,v,t,o,e])=>({s,v,t,o:o.map(x=>[x.slice(1),x[0]=='+']),e}));
+const rnd=a=>[...a].sort(()=>Math.random()-.5);
+let ME=null;try{ME=localStorage.getItem('ctc')}catch(e){}
+const U=()=>{try{return JSON.parse(localStorage.getItem('ctu')||'{}')}catch(e){return{}}},SU=u=>{try{localStorage.setItem('ctu',JSON.stringify(u))}catch(e){}};
+const ld=()=>(U()[ME]||{}).best||{};
+const sv=(k,p,g,n)=>{const u=U(),m=u[ME];if(!m)return;m.best=m.best||{};m.best[k]=Math.max(m.best[k]||0,p);m.hist=[{d:Date.now(),m:k,g,n},...(m.hist||[])].slice(0,30);SU(u)};
+let S;
+function home(){if(!ME||!U()[ME])return login();const b=ld(),best=k=>b[k]!=null?' · meilleur '+b[k]+' %':'';
+$('#app').innerHTML=`<div class="top"><b>👤 ${esc(U()[ME].n)}</b><button class="ghost" onclick="logout()">Se déconnecter</button></div><h1>🚗 Code Training</h1><p class="mu">Entraîne-toi au code de la route : coche toutes les bonnes réponses, puis valide.</p><div class="row"><button class="ghost" onclick="prof()">📊 Mon profil</button><button class="ghost" onclick="ech()">💬 Idées et questions</button><button class="ghost" onclick="inst()">📲 Installer</button></div><div class="grid">${SER.map((n,i)=>`<button class="tile" onclick="start(${i})"><b>${IC[i]} ${n}</b><span>${Q.filter(q=>q.s==i).length} questions${best(i)}</span></button>`).join('')}</div><button class="tile ex" onclick="start('exam')"><b>🎓 Examen blanc</b><span>40 questions mélangées, résultat à la fin · réussite à 35 bonnes réponses sur 40${best('exam')}</span></button><small class="n mu">Questions rédigées d’après le Code de la route, ce ne sont pas les sujets officiels. Complétez avec les séries de votre auto-école.</small>`}
+function start(m){S={m,l:rnd(m=='exam'?Q:Q.filter(q=>q.s==m)).slice(0,40).map(q=>({...q,o:rnd(q.o)})),i:0,r:[]};show()}
+function show(){const q=S.l[S.i],n=S.l.length;
+$('#app').innerHTML=`<div class="top"><button class="ghost" onclick="home()">← Quitter</button><span>Question ${S.i+1} / ${n}</span></div><div class="bar"><i style="width:${S.i/n*100}%"></i></div><div class="card"><div class="vis">${vis(q)}</div><h2>${q.t}</h2><span class="tag">${tag(q)}</span>${q.o.map((o,j)=>`<label class="opt"><input type="checkbox"><span>${o[0]}</span><b class="m"></b></label>`).join('')}<div id="fb"></div><button id="go" class="pri" onclick="val()">Valider</button></div>`;if(nb(q)==1)document.querySelectorAll('.opt input').forEach(c=>c.onchange=()=>{if(c.checked)document.querySelectorAll('.opt input').forEach(d=>{if(d!=c)d.checked=false})});window.scrollTo(0,0)}
+function val(){const q=S.l[S.i],ls=[...document.querySelectorAll('.opt')],sel=ls.map(l=>l.querySelector('input').checked);
+if(!sel.includes(true)){$('#fb').innerHTML='<p class="err">Cochez au moins une réponse.</p>';return}
+const ok=q.o.every((o,j)=>o[1]==sel[j]);S.r.push({q,ok,sel});
+if(S.m=='exam')return nxt();
+ls.forEach((l,j)=>{const m=l.querySelector('.m');l.querySelector('input').disabled=true;if(q.o[j][1]){l.classList.add('good');m.textContent='✔'}else if(sel[j]){l.classList.add('bad');m.textContent='✘'}});
+$('#fb').innerHTML=`<div class="fb ${ok?'g':'b'}"><b>${ok?'Bonne réponse !':'Réponse incorrecte'}</b><br>${q.e}</div>`;
+const g=$('#go');g.textContent=S.i+1<S.l.length?'Question suivante →':'Voir mon résultat';g.onclick=nxt}
+function nxt(){S.i++;S.i<S.l.length?show():end()}
+function end(){const n=S.l.length,g=S.r.filter(x=>x.ok).length,p=Math.round(g/n*100),th=Math.ceil(n*.875),bad=S.r.filter(x=>!x.ok);if(!S.sd){sv(S.m,p,g,n);S.sd=1}
+$('#app').innerHTML=`<div class="card"><h1>${g>=th?'🎉 Réussi !':'💪 Continuez à vous entraîner'}</h1><p class="score">${g} / ${n} <small>(${p} %)</small></p><p class="mu">Seuil de réussite : ${th} bonnes réponses (87,5 %).</p><h2>Détail des questions</h2><p class="mu">Vert : réussie · Rouge : ratée. Touche un carré pour revoir la question et voir où tu t’es trompé.</p><div class="sqs">${S.r.map((x,i)=>`<button class="${x.ok?'g':'r'}" onclick="rv(${i})">${i+1}</button>`).join('')}</div>${bad.length?'':'<p>Aucune erreur, bravo !</p>'}<div class="row"><button class="pri" onclick="start(S.m)">Rejouer</button><button class="ghost" onclick="home()">Accueil</button></div></div>`;window.scrollTo(0,0)}
+const nb=q=>q.o.filter(o=>o[1]).length;
+const tag=q=>nb(q)>1?`☑ ${nb(q)} bonnes réponses : cochez-les toutes`:'☑ 1 seule bonne réponse';
+const vis=q=>`${V[q.v]}${ANIM.includes(q.v)?'<em>▶ animation</em><div class="lg"><b style="color:#1e88e5">■</b> Vous · <b style="color:#e53935">■</b> Les autres</div>':''}`;
+function rv(i){const x=S.r[i],q=x.q;
+$('#app').innerHTML=`<div class="top"><button class="ghost" onclick="end()">← Résultats</button><span>Question ${i+1} / ${S.r.length}</span></div><div class="card"><div class="vis">${vis(q)}</div><h2>${q.t}</h2><span class="tag">${tag(q)}</span>${q.o.map((o,j)=>{const c=x.sel[j],st=c&&o[1]?'bien cochée':c?'cochée à tort':o[1]?'oubliée':'';return `<div class="opt ${o[1]?'good':c?'bad':''}"><span>${o[0]}${st?'<br><small class="mu">'+st+'</small>':''}</span><b class="m">${o[1]?'✔':c?'✘':''}</b></div>`}).join('')}<div class="fb ${x.ok?'g':'b'}"><b>${x.ok?'Question réussie':'Question ratée'}</b><br>${q.e}</div><div class="row"><button class="ghost" onclick="rv(${i-1})" ${i?'':'disabled'}>← Précédente</button><button class="ghost" onclick="rv(${i+1})" ${i<S.r.length-1?'':'disabled'}>Suivante →</button></div></div>`;window.scrollTo(0,0)}
+const VERSION='1.2';let ANN=null,T0=0,NEW=false;
+const bar=document.createElement('div');bar.id='upd';document.body.prepend(bar);
+function tick(){if(NEW)return;if(!ANN){bar.style.display='none';return}const s=Math.max(0,Math.round((T0+ANN.minutes*60000-Date.now())/1000));bar.style.display='block';bar.innerHTML=s>0?`⏳ ${ANN.annonce} — mise à jour dans ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}. Termine ta série en cours.`:'🔄 La mise à jour est prête. <button onclick="location.reload()">Actualiser</button>'}
+async function chk(){try{const r=await fetch('maj.json?'+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
+if(j.version&&j.version!==VERSION){NEW=true;bar.style.display='block';bar.innerHTML='🔄 Nouvelle version disponible. <button onclick="location.reload()">Actualiser</button>';return}
+if(j.annonce){if(!ANN)T0=Date.now();ANN=j}else ANN=null;tick()}catch(e){}}
+setInterval(tick,1000);setInterval(chk,30000);chk();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
+const H=async(s,p)=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const kid=(a,b)=>(a+' '+b).trim().toLowerCase().replace(/\s+/g,' '),er=t=>$('.err').textContent=t;
+function login(m='in'){ME=null;$('#app').innerHTML=`<h1>🚗 Code Training</h1><p class="mu">${m=='in'?'Connecte-toi pour retrouver ta progression.':'Crée ton profil : prénom, nom et mot de passe suffisent, pas d’e-mail.'}</p><div class="card"><input id="fp" placeholder="Prénom" autocomplete="given-name"><input id="fn" placeholder="Nom" autocomplete="family-name"><input id="fw" type="password" placeholder="Mot de passe" autocomplete="${m=='in'?'current-password':'new-password'}"><p class="err"></p><button class="pri" onclick="${m=='in'?'go()':'reg()'}">${m=='in'?'Se connecter':'Créer mon profil'}</button><button class="ghost" style="margin-top:10px;width:100%" onclick="login('${m=='in'?'new':'in'}')">${m=='in'?'Pas encore de profil ? En créer un':'J’ai déjà un profil'}</button></div><small class="n mu">Ton profil et tes scores restent enregistrés sur cet appareil.</small>`}
+async function go(){const p=$('#fp').value,n=$('#fn').value,w=$('#fw').value,id=kid(p,n),u=U()[id];if(!p.trim()||!n.trim()||!w)return er('Remplis les trois champs.');if(!u||u.h!=await H(u.s,w))return er('Prénom, nom ou mot de passe incorrect.');ME=id;LS('ctc',id);home()}
+async function reg(){const p=$('#fp').value.trim(),n=$('#fn').value.trim(),w=$('#fw').value,id=kid(p,n),us=U();if(!p||!n||w.length<4)return er('Prénom, nom et mot de passe (4 caractères minimum).');if(us[id])return er('Ce profil existe déjà : connecte-toi.');const s=Math.random().toString(36).slice(2);us[id]={n:p+' '+n,s,h:await H(s,w),best:{},hist:[]};SU(us);ME=id;LS('ctc',id);home()}
+function logout(){ME=null;LS('ctc',null);login()}
+function prof(){const u=U()[ME],b=u.best||{},h=u.hist||[],nm=m=>m=='exam'?'Examen blanc':SER[m];
+$('#app').innerHTML=`<div class="top"><button class="ghost" onclick="home()">← Accueil</button><span>${esc(u.n)}</span></div><div class="card"><h2>Ma progression</h2>${[0,1,2,3,'exam'].map(m=>`<p>${m=='exam'?'🎓':IC[m]} ${nm(m)} : <b>${b[m]!=null?b[m]+' %':'pas encore fait'}</b></p><div class="bar"><i style="width:${b[m]||0}%"></i></div>`).join('')}<h2>Derniers résultats</h2>${h.length?h.slice(0,10).map(x=>`<p class="mu">${new Date(x.d).toLocaleDateString('fr-FR')} · ${nm(x.m)} · ${x.g}/${x.n}</p>`).join(''):'<p class="mu">Aucun résultat pour l’instant.</p>'}</div>`;window.scrollTo(0,0)}
+async function ech(){$('#app').innerHTML=`<div class="top"><button class="ghost" onclick="home()">← Accueil</button><span>Idées et questions</span></div><div class="card"><h2>Écrire à l’équipe</h2><select id="et"><option>Question</option><option>Idée d’amélioration</option><option>Erreur dans une question</option></select><textarea id="em" rows="4" placeholder="Ton message…"></textarea><p class="mu" style="font-size:13px">Ton prénom et ton nom sont joints au message pour qu’on puisse te répondre.</p><p class="err" id="eo"></p><button class="pri" onclick="snd()">Envoyer</button></div><div class="card" style="margin-top:12px"><h2>Réponses et nouveautés</h2><div id="el" class="mu">Chargement…</div></div>`;
+try{const r=await fetch('echanges.json?'+Date.now(),{cache:'no-store'}),l=await r.json();$('#el').innerHTML=l.length?l.map(x=>`<div class="rev"><b>${esc(x.q)}</b><p>${esc(x.r)}</p></div>`).join(''):'Rien pour l’instant.'}catch(e){$('#el').textContent='Rien pour l’instant.'}}
+async function snd(){const m=$('#em').value.trim(),o=$('#eo');if(!m)return;try{const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'echanges',prenom:U()[ME].n,type:$('#et').value,message:m})});if(!r.ok)throw 0;$('#em').value='';o.style.color='var(--ok)';o.textContent='Message envoyé, merci !'}catch(e){o.style.color='';o.textContent='Envoi impossible pour le moment.'}}
+let DP=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e});
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+function inst(){const ua=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(ua),an=/Android/.test(ua),st=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+$('#app').innerHTML=`<div class="top"><button class="ghost" onclick="home()">← Accueil</button><span>Installer l’application</span></div><div class="card"><h2>📲 Code Training sur ton appareil</h2><p class="mu">${st?'✅ L’application est déjà installée sur cet appareil.':'Installe-la gratuitement : une icône sur ton écran, ouverture en plein écran, et elle marche aussi sans internet.'}</p>${DP?'<button class="pri" onclick="DP.prompt()">Installer maintenant</button>':''}</div>`+[['🤖 Android (Chrome)','Ouvre le menu ⋮ puis « Installer l’application » (ou « Ajouter à l’écran d’accueil »).',an],['🍎 iPhone / iPad (Safari)','Touche le bouton Partager ⬆️, puis « Sur l’écran d’accueil », puis « Ajouter ». Ça ne marche que dans Safari.',ios],['🪟 Windows (Chrome ou Edge)','Clique sur l’icône d’installation à droite de la barre d’adresse (un écran avec une flèche), puis « Installer ».',/Windows/.test(ua)],['🍏 Mac (Chrome, Edge ou Safari)','Chrome ou Edge : icône d’installation dans la barre d’adresse, puis « Installer ». Safari : menu Fichier, puis « Ajouter au Dock ».',/Macintosh/.test(ua)&&!ios]].map(a=>`<div class="card" style="margin-top:12px${a[2]?';border-color:var(--ac)':''}"><b>${a[0]}${a[2]?' · ton appareil':''}</b><p class="mu">${a[1]}</p></div>`).join('');window.scrollTo(0,0)}
+home();
+</script></body></html>

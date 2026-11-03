@@ -1,0 +1,254 @@
+[
+[
+1,
+"🚸",
+"Dans une zone 30 :",
+[
+"+La vitesse est limitée à 30 km/h",
+"+Les cyclistes peuvent en principe circuler à double sens",
+"-Le stationnement est interdit",
+"-La priorité à droite ne s’applique plus"
+],
+"La priorité à droite s’applique toujours sans signalisation ; les cyclistes ont en général le double sens."
+],
+[
+1,
+"🚶",
+"Dans une zone de rencontre (20 km/h) :",
+[
+"+La vitesse est limitée à 20 km/h",
+"+Les piétons sont prioritaires sur les véhicules",
+"-Les piétons doivent rester sur le trottoir",
+"-Je peux rouler à 50 km/h si la route est vide"
+],
+"Les piétons peuvent circuler sur la chaussée et ils sont prioritaires."
+],
+[
+1,
+"🚂",
+"Le feu rouge clignote à un passage à niveau.",
+[
+"+Je m’arrête avant le passage",
+"-Je passe vite si je ne vois pas de train",
+"-Je peux passer si les barrières sont encore levées",
+"+Je ne m’engage que si ma sortie est libre"
+],
+"Un signal rouge clignotant impose l’arrêt, et on ne s’engage jamais sans avoir de place pour sortir."
+],
+[
+1,
+"↪️",
+"Quand dois-je mettre mon clignotant ?",
+[
+"+Avant de changer de direction",
+"+Avant de dépasser",
+"-Seulement si un véhicule me suit",
+"-Après avoir commencé la manœuvre"
+],
+"On signale sa manœuvre suffisamment tôt, avant de la commencer."
+],
+[
+1,
+"🛑",
+"L’arrêt est interdit…",
+[
+"+Sur un passage pour piétons",
+"+En haut d’une côte ou dans un virage sans visibilité",
+"-Le long d’un trottoir, si aucun panneau ne l’interdit",
+"-Sur une place de stationnement ordinaire"
+],
+"On ne s’arrête pas là où l’on gêne ou met en danger les autres usagers."
+],
+[
+1,
+"🚫",
+"Il est interdit de dépasser…",
+[
+"+Près du sommet d’une côte sans visibilité",
+"+Un véhicule arrêté devant un passage pour piétons",
+"-Un véhicule lent sur ligne discontinue avec bonne visibilité",
+"-Un cycliste en gardant une distance suffisante"
+],
+"On ne dépasse pas sans visibilité, ni un véhicule arrêté pour laisser traverser un piéton."
+],
+[
+1,
+"⏱️",
+"À 50 km/h, quelle distance parcourez-vous à peu près en 1 seconde ?",
+[
+"-5 mètres",
+"+14 mètres",
+"-30 mètres",
+"-50 mètres"
+],
+"50 km/h correspondent à environ 14 m par seconde : le temps de réaction compte beaucoup."
+],
+[
+1,
+"🍷",
+"Pour un permis probatoire, le taux d’alcool maximal est de…",
+[
+"-0,5 g/l de sang",
+"+0,2 g/l de sang",
+"-0,8 g/l de sang",
+"-1 g/l de sang"
+],
+"Le taux est abaissé à 0,2 g/l de sang (0,10 mg/l d’air expiré) pour les jeunes conducteurs."
+],
+[
+1,
+"🪪",
+"À propos des points du permis :",
+[
+"+Un permis classique compte 12 points",
+"+Un conducteur novice commence avec moins de points",
+"-Les points se récupèrent toujours en un mois",
+"-Les petites infractions n’enlèvent jamais de point"
+],
+"Le capital est de 12 points ; les novices partent avec 6 points et les récupèrent progressivement."
+],
+[
+0,
+"noentry",
+"Un panneau rond à bord rouge indique en général…",
+[
+"+Une interdiction ou une limitation",
+"-Un danger",
+"-Une obligation",
+"-Une simple indication"
+],
+"Rond rouge : interdiction. Triangle : danger. Rond bleu : obligation. Carré ou rectangle : indication."
+],
+[
+2,
+"🩸",
+"Une personne saigne abondamment.",
+[
+"+J’appuie fortement sur la plaie avec un linge propre",
+"-Je retire l’objet planté dans la plaie",
+"+J’appelle le 15 ou le 18",
+"-Je pose toujours un garrot en premier"
+],
+"On comprime la plaie et on alerte. Un objet planté ne se retire pas, et le garrot n’est qu’un dernier recours."
+],
+[
+2,
+"🛌",
+"Une victime est inconsciente mais elle respire.",
+[
+"+Je la mets en position latérale de sécurité (PLS)",
+"-Je la laisse sur le dos",
+"+Je surveille sa respiration en attendant les secours",
+"-Je lui donne à boire"
+],
+"La PLS dégage les voies aériennes ; on ne donne jamais à boire à une personne inconsciente."
+],
+[
+2,
+"🏍️",
+"Un motard est accidenté.",
+[
+"+Je ne retire pas son casque sauf nécessité",
+"-Je retire son casque tout de suite",
+"+J’alerte les secours",
+"-Je le relève pour l’asseoir"
+],
+"Retirer le casque ou bouger la victime peut aggraver une blessure au cou."
+],
+[
+2,
+"🔥",
+"Un véhicule prend feu.",
+[
+"+Je fais sortir les occupants et je m’éloigne",
+"-J’ouvre le capot pour éteindre",
+"+J’appelle le 18",
+"-Je reste à côté pour surveiller"
+],
+"On évacue, on s’éloigne et on appelle les pompiers. Ouvrir le capot alimente le feu."
+],
+[
+2,
+"🦺",
+"À propos du gilet de haute visibilité :",
+[
+"+Il doit être à portée du conducteur, dans l’habitacle",
+"-Il peut rester dans le coffre",
+"+Je l’enfile avant de sortir en cas de panne",
+"-Il n’est obligatoire que de nuit"
+],
+"Il s’enfile avant de sortir, de jour comme de nuit."
+],
+[
+3,
+"💡",
+"Les feux de croisement sont obligatoires…",
+[
+"+La nuit",
+"+Quand la visibilité est réduite (pluie, brouillard)",
+"-Seulement hors agglomération",
+"-Uniquement quand je croise un véhicule"
+],
+"On s’éclaire aussi pour être vu, dès que la visibilité baisse."
+],
+[
+3,
+"🔦",
+"Je dois passer des feux de route aux feux de croisement…",
+[
+"+Quand je croise un véhicule",
+"+Quand je suis de près le véhicule devant",
+"-Jamais en rase campagne",
+"-Seulement en ville"
+],
+"Les feux de route éblouissent les autres conducteurs."
+],
+[
+3,
+"🌡️",
+"Le voyant de température du moteur est rouge.",
+[
+"+Je m’arrête en sécurité et je coupe le moteur",
+"-J’ouvre tout de suite le bouchon du radiateur",
+"+J’attends que le moteur refroidisse avant de vérifier",
+"-Je continue à rouler lentement jusqu’au garage"
+],
+"Un moteur trop chaud peut casser, et le liquide brûlant peut jaillir à l’ouverture du bouchon."
+],
+[
+3,
+"🛞",
+"Avec l’ABS, lors d’un freinage d’urgence :",
+[
+"+J’appuie à fond sur la pédale sans la relâcher",
+"-Je pompe sur la pédale",
+"+Je peux continuer à braquer pour éviter un obstacle",
+"-La distance de freinage est toujours plus courte"
+],
+"L’ABS évite le blocage des roues et garde la direction, mais il ne raccourcit pas toujours la distance."
+],
+[
+3,
+"⛽",
+"Pour limiter la consommation de carburant :",
+[
+"+Je vérifie la pression des pneus",
+"+Je roule à vitesse stable",
+"-Je garde des charges inutiles sur le toit",
+"-J’accélère fort puis je freine fort"
+],
+"Pneus bien gonflés, vitesse régulière et véhicule allégé réduisent la consommation."
+],
+[
+4,
+"🐄",
+"Un animal traverse la route sur un chemin de montagne.",
+[
+"+Je ralentis et je m’arrête si besoin",
+"-Je klaxonne fort et j’accélère",
+"+Je reste attentif à d’autres animaux derrière",
+"-Je le dépasse sans ralentir"
+],
+"Les animaux sont imprévisibles : on ralentit et on garde de la marge."
+]
+]
